@@ -1,0 +1,11 @@
+.outer-border{
+    display: grid;
+    background-color: hsl(0, 0%, 83%);
+    border: solid;
+    border-width: 5px;
+    border-radius: 15px;
+    width: 300px;
+    padding: 25px;
+    grid-template-rows: repeat(3, 100px);
+    grid-template-columns: repeat(3, 100px);
+}
