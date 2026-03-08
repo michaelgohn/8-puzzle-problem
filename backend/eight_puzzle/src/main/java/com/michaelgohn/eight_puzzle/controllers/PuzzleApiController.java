@@ -29,14 +29,14 @@ public class PuzzleApiController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createProblemState(@RequestBody PuzzleRequestDto puzzleRequest) {
+    public ResponseEntity<ProblemState> createProblemState(@RequestBody PuzzleRequestDto puzzleRequest) {
         int[][] initMatrix = puzzleRequest.getInitState();
         int[][] goalMatrix = puzzleRequest.getGoalState();
         String heuristic = puzzleRequest.getHeuristic();
 
         ProblemState problemState = puzzleApiService.createProblemState(initMatrix, goalMatrix, heuristic);
 
-        return ResponseEntity.ok("replace this");
+        return ResponseEntity.ok(problemState);
     }
     
     

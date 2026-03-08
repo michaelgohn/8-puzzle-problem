@@ -2,6 +2,7 @@ package com.michaelgohn.eight_puzzle.services.impl;
 
 import com.michaelgohn.eight_puzzle.models.ProblemState;
 import com.michaelgohn.eight_puzzle.models.State;
+import com.michaelgohn.eight_puzzle.repository.ProblemStateRepository;
 import com.michaelgohn.eight_puzzle.services.PuzzleApiService;
 
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class PuzzleApiServiceImpl implements PuzzleApiService {
 
+    private ProblemStateRepository problemStateRepo;
+    
     @Override
     public void startSolving(ArrayList<State> openList, State initState, State goalState, String heuristic) {
         // Frontend
@@ -26,7 +29,10 @@ public class PuzzleApiServiceImpl implements PuzzleApiService {
         State initState = new State(initMatrix);
         State goalState = new State(goalMatrix);
 
-        return new ProblemState(initState, goalState, heuristic);
+        ProblemState problemState = new ProblemState(initState, goalState, heuristic);
+        problemStateRepo.save(problemState);
+
+        return problemState;
     }
     
 }
