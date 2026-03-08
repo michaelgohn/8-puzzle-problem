@@ -1,6 +1,8 @@
 package com.michaelgohn.eight_puzzle.logic;
 import java.util.*;
 
+import com.michaelgohn.eight_puzzle.models.State;
+
 public class Utils {
 
     // METHOD USED FOR TESTING PURPOSES

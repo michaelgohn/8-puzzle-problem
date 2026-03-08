@@ -1,8 +1,15 @@
-package com.michaelgohn.eight_puzzle.logic;
+package com.michaelgohn.eight_puzzle.models;
 import java.util.*;
+
+import com.michaelgohn.eight_puzzle.logic.Coordinates;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 import static java.lang.Math.abs;
 
+@Entity
 public class State {
 
     private State parentState;
@@ -11,7 +18,11 @@ public class State {
     private int gVal;
     private int hVal;
     private int fVal;
-    private int id;
+    private String chosenHeuristic;
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     public State(){
         this.parentState = null;
@@ -20,7 +31,7 @@ public class State {
         this.gVal = 0;
         this.hVal = 0;
         this.fVal = 0;
-        this.id = Main.interativeId++;
+        this.chosenHeuristic = "";
     }
 
     public State(int[][] statePosition){
@@ -30,7 +41,7 @@ public class State {
         this.gVal = 0;
         this.hVal = 0;
         this.fVal = 0;
-        this.id = Main.interativeId++;
+        this.chosenHeuristic = "";
     }
 
     public State(State parentState, int[][] statePosition){
@@ -40,20 +51,20 @@ public class State {
         this.gVal = 0;
         this.hVal = 0;
         this.fVal = 0;
-        this.id = Main.interativeId++;
+        this.chosenHeuristic = "";
     }
 
-    public State(State parentState, ArrayList<State> childStates, int[][] statePosition, int gVal, int hVal, int fVal){
+    public State(State parentState, ArrayList<State> childStates, int[][] statePosition, int gVal, int hVal, int fVal, String chosenHeuristic){
         this.parentState = parentState;
         this.childStates = childStates;
         this.statePosition = statePosition;
         this.gVal = gVal;
         this.hVal = hVal;
         this.fVal = fVal;
-        this.id = Main.interativeId++;
+        this.chosenHeuristic = chosenHeuristic;
     }
 
-    public boolean expand(ArrayList<State> openList, ArrayList<State> closedList, State goalState, String chosenHeuristic){
+    public boolean expand(ArrayList<State> openList, ArrayList<State> closedList, State goalState){
 
         boolean solutionFound = checkSolution(goalState);
         if(solutionFound) return solutionFound;

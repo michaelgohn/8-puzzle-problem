@@ -1,14 +1,14 @@
 package com.michaelgohn.eight_puzzle.logic;
 import java.util.*;
 
-public class Main {
+import com.michaelgohn.eight_puzzle.models.State;
 
-    public static int interativeId = 0;
+public class Main {
 
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
 
-        String chosenHeuristic = Utils.acceptHeuristicChoice(scan);
+        String chosenHeuristic = Utils.acceptHeuristicChoice(scan); // depreciated
         State initState = Utils.createInitialState(scan, "Initial State");
         State goalState = Utils.createGoalState(scan, "Goal State");
 
@@ -25,7 +25,7 @@ public class Main {
     
             do {
                 // System.out.println("\nFVAL: " + currState.getFVal() + "\n");
-                foundSolution = currState.expand(openList, closedList, goalState, chosenHeuristic);
+                foundSolution = currState.expand(openList, closedList, goalState);
     
                 if(foundSolution){
                     solutionPath.add(currState);
