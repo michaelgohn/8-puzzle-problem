@@ -1,6 +1,7 @@
 import { InputPuzzleTile } from "./InputPuzzleTile"
 import "../static/styles/Puzzle.css"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export const InputPuzzle = () => {
 
@@ -10,6 +11,7 @@ export const InputPuzzle = () => {
     const [goalMatrix, setGoalMatrix] = useState([]);
     const [heuristic, setHeuristic] = useState("");
     const [showGoalState, setShowGoalState] = useState(false);
+    const navigate = useNavigate();
 
     function handleInitTileChange(index, value) {
         let updatedValues = [...initPuzzleValues];
@@ -83,6 +85,8 @@ export const InputPuzzle = () => {
         } catch (error) {
             console.error(`Error sending puzzle: ${error}`);
         };
+
+        navigate("/");
     }
 
     return(
