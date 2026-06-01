@@ -1,21 +1,21 @@
 package com.michaelgohn.eight_puzzle.dtos;
 
 public class PuzzleRequestDto {
-    private int[][] initState;
-    private int[][] goalState;
+    private int[][] initMatrix;
+    private int[][] goalMatrix;
     private String heuristic;
 
-    public int[][] getInitState() {
-        return initState;
+    public int[][] getInitMatrix() {
+        return initMatrix;
     }
-    public void setInitState(int[][] initState) {
-        this.initState = initState;
+    public void setInitMatrix(int[][] initMatrix) {
+        this.initMatrix = initMatrix;
     }
-    public int[][] getGoalState() {
-        return goalState;
+    public int[][] getGoalMatrix() {
+        return goalMatrix;
     }
-    public void setGoalState(int[][] goalState) {
-        this.goalState = goalState;
+    public void setGoalMatrix(int[][] goalMatrix) {
+        this.goalMatrix = goalMatrix;
     }
     public String getHeuristic() {
         return heuristic;

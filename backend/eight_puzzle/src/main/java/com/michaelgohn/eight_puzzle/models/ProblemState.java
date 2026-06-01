@@ -1,15 +1,7 @@
 package com.michaelgohn.eight_puzzle.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
-@Entity
 public class ProblemState {
 
-    @Id
-    @GeneratedValue
-    private Long id;
     private State initState;
     private State goalState;
     private String heuristic;
@@ -24,6 +16,68 @@ public class ProblemState {
         this.initState = initState;
         this.goalState = goalState;
         this.heuristic = heuristic;
+    }
+
+    public ProblemStateDBObj convertProblemState(){
+        int[][] initMatrix = this.getInitState().getStatePosition();
+        String initString = matrixToString(initMatrix);
+
+        int[][] goalMatrix = this.getGoalState().getStatePosition();
+        String goalString = matrixToString(goalMatrix);
+
+        return new ProblemStateDBObj(initString, goalString, this.heuristic);
+    }
+
+    private String matrixToString(int[][] matrix){
+
+        String temp = "";
+
+        for(int row = 0; row < matrix.length; row++){
+            for(int col = 0; col < matrix[row].length; col++){
+                temp += matrix[row][col];
+                if(row != matrix.length - 1 || col != matrix[row].length - 1){
+                    temp += ",";
+                }
+            }
+        }
+
+        return temp;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("{\n\t");
+
+        sb.append(buildMatrixString(initState.getStatePosition()) + ",\n");
+        sb.append("\t" + buildMatrixString(goalState.getStatePosition()) + ",\n");
+        sb.append("\t" + heuristic);
+
+        sb.append("\n}");
+
+        return sb.toString();
+    }
+
+    /**
+     * Helper method for toString
+     * @return matrix as a string
+     */
+    private String buildMatrixString(int[][] matrix) {
+        StringBuilder sb = new StringBuilder("[");
+
+        for(int row = 0; row < matrix.length; row++) {
+            for(int col = 0; col < matrix[row].length; col++) {
+
+                sb.append(matrix[row][col]);
+
+                if(row != matrix.length - 1 || col != matrix[row].length - 1){
+                    sb.append(",");
+                } else {
+                    sb.append("]");
+                }
+            }
+        }
+
+        return sb.toString();
     }
 
     public State getInitState() {

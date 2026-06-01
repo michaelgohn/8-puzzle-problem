@@ -3,13 +3,8 @@ import java.util.*;
 
 import com.michaelgohn.eight_puzzle.logic.Coordinates;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
 import static java.lang.Math.abs;
 
-@Entity
 public class State {
 
     private State parentState;
@@ -19,10 +14,6 @@ public class State {
     private int hVal;
     private int fVal;
     private String chosenHeuristic;
-
-    @Id
-    @GeneratedValue
-    private Long id;
 
     public State(){
         this.parentState = null;

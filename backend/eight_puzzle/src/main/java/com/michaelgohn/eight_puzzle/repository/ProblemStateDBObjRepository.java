@@ -3,9 +3,9 @@ package com.michaelgohn.eight_puzzle.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.michaelgohn.eight_puzzle.models.ProblemState;
+import com.michaelgohn.eight_puzzle.models.ProblemStateDBObj;
 
 @Repository
-public interface ProblemStateRepository extends JpaRepository<ProblemState, Long> {
+public interface ProblemStateDBObjRepository extends JpaRepository<ProblemStateDBObj, Long> {
     
 }
