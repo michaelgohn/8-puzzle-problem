@@ -1,3 +1,15 @@
+.input-puzzle{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.goal-puzzle{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .outer-border{
     display: grid;
     background-color: hsl(0, 0%, 83%);
@@ -8,4 +20,16 @@
     padding: 25px;
     grid-template-rows: repeat(3, 100px);
     grid-template-columns: repeat(3, 100px);
+}
+
+.heuristic-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 1rem;
+}
+
+.heuristic-container input {
+    width: 200px;
 }
