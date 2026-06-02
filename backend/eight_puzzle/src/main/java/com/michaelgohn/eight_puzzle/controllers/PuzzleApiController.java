@@ -5,9 +5,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.michaelgohn.eight_puzzle.dtos.PuzzleRequestDto;
 import com.michaelgohn.eight_puzzle.models.ProblemState;
+import com.michaelgohn.eight_puzzle.models.ProblemStateDBObj;
 import com.michaelgohn.eight_puzzle.services.PuzzleApiService;
 
 import lombok.AllArgsConstructor;
+
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,5 +54,10 @@ public class PuzzleApiController {
         }
     }
     
-    
+    @GetMapping("/retrieve")
+    public ResponseEntity<List<ProblemStateDBObj>> retrieveProblemList() {
+        List<ProblemStateDBObj> puzzleList = puzzleApiService.retrieveProblems();
+
+        return ResponseEntity.ok(puzzleList);
+    }
 }

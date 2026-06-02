@@ -9,6 +9,7 @@ import com.michaelgohn.eight_puzzle.services.PuzzleApiService;
 import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,11 @@ public class PuzzleApiServiceImpl implements PuzzleApiService {
         problemStateRepository.save(psDBObj);
         
         return ps;
+    }
+
+    @Override
+    public List<ProblemStateDBObj> retrieveProblems() {
+        return problemStateRepository.findAll();
     }
     
 }
