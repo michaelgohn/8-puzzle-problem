@@ -2,9 +2,18 @@
     font-family: monospace;
     font-size: 2rem;
     text-align: center;
+    font-weight: 400;
     border-right: 5px solid black;
     border-bottom: 5px solid black;
     background-color: white;
+}
+
+.cell p {
+    margin: 0;
+}
+
+.puzzle-small .cell {
+    font-size: 1.5rem;
 }
 
 .cell:nth-child(3n + 1){

@@ -11,15 +11,24 @@
 }
 
 .outer-border{
+    --tile-size: 100px;
+    --puzzle-padding: 25px;
+    
     display: grid;
     background-color: hsl(0, 0%, 83%);
     border: solid;
     border-width: 5px;
     border-radius: 15px;
-    width: 300px;
-    padding: 25px;
-    grid-template-rows: repeat(3, 100px);
-    grid-template-columns: repeat(3, 100px);
+    margin: 1rem;
+    width: calc(var(--tile-size) * 3);
+    padding: var(--puzzle-padding);
+    grid-template-rows: repeat(3, var(--tile-size));
+    grid-template-columns: repeat(3, var(--tile-size));
+}
+
+.puzzle-small {
+    --tile-size: 70px;
+    --puzzle-padding: 15px;
 }
 
 .heuristic-container {

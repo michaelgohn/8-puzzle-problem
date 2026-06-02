@@ -2,15 +2,14 @@ import { PuzzleTile } from "./PuzzleTile"
 import { useState } from "react"
 import "../static/styles/Puzzle.css"
 
-export const Puzzle = () => {
+export const Puzzle = ({ value, size="normal" }) => {
 
-    let cellVals = [1, 2, 3, 4, 5, 6, 7, 8, ""];
-    const [cellValue, setCellValue] = useState([]);
+    const [cellValues, setCellValues] = useState(value);
 
     return(
         <>
-            <div className="outer-border">
-                {cellVals.map((elem, i) => {
+            <div className={`outer-border puzzle-${size}`}>
+                {cellValues.map((elem, i) => {
                     return <PuzzleTile key={i} initCellVal={elem} />
                 })}
             </div>
