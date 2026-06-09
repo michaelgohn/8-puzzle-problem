@@ -31,7 +31,7 @@
     --puzzle-padding: 15px;
 }
 
-.heuristic-container {
+.input-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,6 +39,6 @@
     margin: 1rem;
 }
 
-.heuristic-container input {
+.input-container input {
     width: 200px;
 }

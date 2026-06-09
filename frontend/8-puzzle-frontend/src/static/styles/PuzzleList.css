@@ -42,3 +42,29 @@
     border-color: black;
     background-color: hsl(200, 100%, 50%);
 }
+
+.btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btns .btn {
+    height: 3.5rem;
+    width: 5rem;
+}
+
+.btn-edit {
+    background-color: #22bb33;
+}
+
+.btn-edit:hover {
+    background-color: #1ea82d;
+}
+
+.btn-delete {
+    background-color: #bb2124;
+}
+
+.btn-delete:hover {
+    background-color: #a81d20;
+}

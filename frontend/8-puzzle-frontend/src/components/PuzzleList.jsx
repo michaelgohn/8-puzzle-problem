@@ -23,14 +23,28 @@ export const PuzzleList = () => {
 
             let data = await response.json();
 
-            console.log(`Backend response: ${data}`);
-
             setProblems(data);
         } catch (error) {
             console.error(error);
         }
     }
 
+    async function deletePuzzle(id) {
+        try {
+            const response = await fetch(`http://localhost:8080/puzzle/delete/${id}`, {
+                method: "DELETE"
+            });
+
+            if(!response.ok) {
+                console.log(`Request failed with status: ${(await response).status}`)
+            }
+
+            retrievePuzzles();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    
     return(
         <>
             <div className="container">
@@ -44,7 +58,7 @@ export const PuzzleList = () => {
 
                         return(
                             <div className="problem">
-                                <p>{val.heuristic}</p>
+                                <p>{val.title}</p>
 
                                 <div className="states">
                                     <div className="state">
@@ -55,6 +69,21 @@ export const PuzzleList = () => {
                                         <p>Goal State</p>
                                         <Puzzle value={goalState} size="small" />
                                     </div>
+                                </div>
+
+                                {
+                                    val.heuristic === 'manhattan-distance' ? (
+                                        <p>Heuristic: Manhattan Distance</p>
+                                    ) : (
+                                        <p>Heuristic: Misplaced Tiles</p>
+                                    )
+                                }
+
+                                <div className="btns">
+                                    <Link to={`/edit/${val.id}`}>
+                                        <button className="btn btn-edit">Edit</button>
+                                    </Link>
+                                    <button className="btn btn-delete" onClick={() => deletePuzzle(val.id)}>Delete</button>
                                 </div>
                             </div>
                         )
