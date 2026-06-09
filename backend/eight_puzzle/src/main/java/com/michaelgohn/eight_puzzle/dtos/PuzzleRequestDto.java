@@ -4,6 +4,7 @@ public class PuzzleRequestDto {
     private int[][] initMatrix;
     private int[][] goalMatrix;
     private String heuristic;
+    private String title;
 
     public int[][] getInitMatrix() {
         return initMatrix;
@@ -22,5 +23,11 @@ public class PuzzleRequestDto {
     }
     public void setHeuristic(String heuristic) {
         this.heuristic = heuristic;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

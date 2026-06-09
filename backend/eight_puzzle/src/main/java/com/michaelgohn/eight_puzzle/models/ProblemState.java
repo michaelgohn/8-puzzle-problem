@@ -5,14 +5,17 @@ public class ProblemState {
     private State initState;
     private State goalState;
     private String heuristic;
+    private String title;
 
     public ProblemState(){
+        this.title = "";
         this.initState = null;
         this.goalState = null;
         this.heuristic = "";
     }
 
-    public ProblemState(State initState, State goalState, String heuristic){
+    public ProblemState(String title, State initState, State goalState, String heuristic){
+        this.title = title;
         this.initState = initState;
         this.goalState = goalState;
         this.heuristic = heuristic;
@@ -25,7 +28,7 @@ public class ProblemState {
         int[][] goalMatrix = this.getGoalState().getStatePosition();
         String goalString = matrixToString(goalMatrix);
 
-        return new ProblemStateDBObj(initString, goalString, this.heuristic);
+        return new ProblemStateDBObj(this.title, initString, goalString, this.heuristic);
     }
 
     private String matrixToString(int[][] matrix){
@@ -97,5 +100,12 @@ public class ProblemState {
     }
     public void setHeuristic(String heuristic) {
         this.heuristic = heuristic;
+    }
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

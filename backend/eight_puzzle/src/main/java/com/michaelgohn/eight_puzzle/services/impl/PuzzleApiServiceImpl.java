@@ -30,11 +30,11 @@ public class PuzzleApiServiceImpl implements PuzzleApiService {
     }
 
     @Override
-    public ProblemState createProblemState(int[][] initMatrix, int[][] goalMatrix, String heuristic) {
+    public ProblemState createProblemState(String title, int[][] initMatrix, int[][] goalMatrix, String heuristic) {
         State initState = new State(initMatrix);
         State goalState = new State(goalMatrix);
         
-        ProblemState ps = new ProblemState(initState, goalState, heuristic);
+        ProblemState ps = new ProblemState(title, initState, goalState, heuristic);
 
         ProblemStateDBObj psDBObj = ps.convertProblemState();
 
@@ -47,5 +47,36 @@ public class PuzzleApiServiceImpl implements PuzzleApiService {
     public List<ProblemStateDBObj> retrieveProblems() {
         return problemStateRepository.findAll();
     }
+
+    @Override
+    public ProblemStateDBObj retrieveById(Long id) {
+        return problemStateRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Puzzle not found with id " + id));
+    }
+
+    @Override
+    public ProblemStateDBObj updateProblemState(Long id, String title, int[][] initMatrix, int[][] goalMatrix, String heuristic) {
+        State initState = new State(initMatrix);
+        State goalState = new State(goalMatrix);
+        ProblemState updatedState = new ProblemState(title, initState, goalState, heuristic);
+
+        ProblemStateDBObj psDBObj = updatedState.convertProblemState();
+
+        ProblemStateDBObj originalPSDBObj = problemStateRepository.findById(id)
+                .orElseThrow(() -> new Error("Problem with id: " + id + " not found"));
+
+        originalPSDBObj.setTitle(psDBObj.getTitle());
+        originalPSDBObj.setInitStatePosition(psDBObj.getInitStatePosition());
+        originalPSDBObj.setGoalStatePosition(psDBObj.getGoalStatePosition());
+        originalPSDBObj.setHeuristic(psDBObj.getHeuristic());
+
+        problemStateRepository.save(originalPSDBObj);
+
+        return originalPSDBObj;
+    }
     
+    @Override
+    public void deletePuzzle(Long id) {
+        problemStateRepository.deleteById(id);
+    }
 }

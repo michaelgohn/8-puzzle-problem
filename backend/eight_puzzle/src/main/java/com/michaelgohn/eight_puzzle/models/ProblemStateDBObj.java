@@ -16,6 +16,8 @@ public class ProblemStateDBObj {
     @GeneratedValue
     private long id;
 
+    private String title;
+    
     @Column(length = 17)
     private String initStatePosition;
 
@@ -23,7 +25,8 @@ public class ProblemStateDBObj {
     private String goalStatePosition;
     private String heuristic;
 
-    public ProblemStateDBObj(String initStatePosition, String goalStatePosition, String heuristic) {
+    public ProblemStateDBObj(String title, String initStatePosition, String goalStatePosition, String heuristic) {
+        this.title = title;
         this.initStatePosition = initStatePosition;
         this.goalStatePosition = goalStatePosition;
         this.heuristic = heuristic;
@@ -34,6 +37,12 @@ public class ProblemStateDBObj {
     }
     public void setId(long id) {
         this.id = id;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
     }
     public String getInitStatePosition() {
         return initStatePosition;
