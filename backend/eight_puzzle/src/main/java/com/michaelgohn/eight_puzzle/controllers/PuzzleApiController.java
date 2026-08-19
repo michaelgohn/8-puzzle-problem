@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.michaelgohn.eight_puzzle.dtos.PuzzleRequestDto;
 import com.michaelgohn.eight_puzzle.models.ProblemState;
 import com.michaelgohn.eight_puzzle.models.ProblemStateDBObj;
+import com.michaelgohn.eight_puzzle.models.SolutionState;
+import com.michaelgohn.eight_puzzle.models.State;
 import com.michaelgohn.eight_puzzle.services.PuzzleApiService;
 
 import lombok.AllArgsConstructor;
@@ -33,12 +35,32 @@ public class PuzzleApiController {
     
     private PuzzleApiService puzzleApiService;
 
-    @PostMapping("/start")
-    public void startSolving() {
-        return ;
+    @GetMapping("/start/{id}")
+    public ResponseEntity<?> startSolving(@PathVariable Long id) {
+        ProblemStateDBObj problemStateDBObj = puzzleApiService.getById(id);
+        ProblemState problemState = problemStateDBObj.convertToProblemState();
+
+        if(puzzleApiService.checkIfSolvable(problemState)) {
+            ProblemState solvedProblemState = puzzleApiService.solve(problemState);
+            SolutionState solutionState = new SolutionState(
+                                                            id,
+                                                            solvedProblemState.getTitle(),
+                                                            solvedProblemState.getInitState().getStatePosition(),
+                                                            solvedProblemState.getGoalState().getStatePosition(),
+                                                            solvedProblemState.getHeuristic()
+                                                        );
+
+            solutionState.populateSolutionPath(solvedProblemState);
+            System.out.println("Solution State's ID: " + solutionState.getId());
+            return ResponseEntity.ok(solutionState);
+        } 
+        
+        return ResponseEntity
+                    .unprocessableEntity()
+                    .body("Solution not possible for given initial and goal states.");
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<String> createProblemState(@RequestBody PuzzleRequestDto puzzleRequest) {
         int[][] initMatrix = puzzleRequest.getInitMatrix();
         int[][] goalMatrix = puzzleRequest.getGoalMatrix();
@@ -57,20 +79,20 @@ public class PuzzleApiController {
         }
     }
     
-    @GetMapping("/retrieve")
+    @GetMapping()
     public ResponseEntity<List<ProblemStateDBObj>> retrieveProblemList() {
-        List<ProblemStateDBObj> puzzleList = puzzleApiService.retrieveProblems();
+        List<ProblemStateDBObj> puzzleList = puzzleApiService.getProblems();
 
         return ResponseEntity.ok(puzzleList);
     }
 
-    @GetMapping("/retrieve/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProblemStateDBObj> retrieveProblemById(@PathVariable Long id) {
-        ProblemStateDBObj problem = puzzleApiService.retrieveById(id);
+        ProblemStateDBObj problem = puzzleApiService.getById(id);
         return ResponseEntity.ok(problem);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ProblemStateDBObj> updatePuzzle(@PathVariable Long id, @RequestBody PuzzleRequestDto requestBody) {
         String title = requestBody.getTitle();
         int[][] initMatrix = requestBody.getInitMatrix();
@@ -82,7 +104,7 @@ public class PuzzleApiController {
         return ResponseEntity.ok(updatedPuzzle);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePuzzle(@PathVariable Long id) {
         System.out.println("id value: " + id);
         puzzleApiService.deletePuzzle(id);

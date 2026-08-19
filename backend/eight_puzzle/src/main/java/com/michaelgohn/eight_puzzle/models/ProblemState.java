@@ -1,23 +1,30 @@
 package com.michaelgohn.eight_puzzle.models;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Comparator;
+
 public class ProblemState {
 
+    private String title;
     private State initState;
     private State goalState;
+    private List<State> solutionPath;
     private String heuristic;
-    private String title;
 
     public ProblemState(){
         this.title = "";
         this.initState = null;
         this.goalState = null;
+        this.solutionPath = null;
         this.heuristic = "";
     }
 
-    public ProblemState(String title, State initState, State goalState, String heuristic){
+    public ProblemState(String title, State initState, State goalState, List<State> solutionPath, String heuristic){
         this.title = title;
         this.initState = initState;
         this.goalState = goalState;
+        this.solutionPath = solutionPath;
         this.heuristic = heuristic;
     }
 
@@ -101,6 +108,14 @@ public class ProblemState {
     public void setHeuristic(String heuristic) {
         this.heuristic = heuristic;
     }
+    public List<State> getSolutionPath() {
+        return solutionPath;
+    }
+
+    public void setSolutionPath(List<State> solutionPath) {
+        this.solutionPath = solutionPath;
+    }
+    
     public String getTitle() {
         return title;
     }
