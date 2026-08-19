@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.solution-path {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 50px;
+    /* margin-top: 100px; */
+}
+
+.problem-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.problem-state:last-child:nth-child(3n + 1) {
+    grid-column: 2;
+}
+
+.problem-state:last-child:nth-child(3n + 2) {
+    grid-column: 3;
+}
+
+.state-position {
+    width: max-content;
+    text-align: center;
+}

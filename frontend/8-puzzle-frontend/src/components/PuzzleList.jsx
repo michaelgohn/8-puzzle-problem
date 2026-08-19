@@ -15,7 +15,7 @@ export const PuzzleList = () => {
 
     async function retrievePuzzles() {
         try {
-            const response = await fetch("http://localhost:8080/puzzle/retrieve");
+            const response = await fetch("http://localhost:8080/puzzle");
 
             if(!response.ok) {
                 throw new Error(`Request failed with status ${(await response).status}`);
@@ -31,7 +31,7 @@ export const PuzzleList = () => {
 
     async function deletePuzzle(id) {
         try {
-            const response = await fetch(`http://localhost:8080/puzzle/delete/${id}`, {
+            const response = await fetch(`http://localhost:8080/puzzle/${id}`, {
                 method: "DELETE"
             });
 
@@ -57,7 +57,7 @@ export const PuzzleList = () => {
                         let goalState = val.goalStatePosition.split(',');
 
                         return(
-                            <div className="problem">
+                            <div className="problem" key={val.id}>
                                 <p>{val.title}</p>
 
                                 <div className="states">
@@ -80,6 +80,9 @@ export const PuzzleList = () => {
                                 }
 
                                 <div className="btns">
+                                    <Link to={`/start/${val.id}`}>
+                                        <button className="btn btn-start">Start</button>
+                                    </Link>
                                     <Link to={`/edit/${val.id}`}>
                                         <button className="btn btn-edit">Edit</button>
                                     </Link>

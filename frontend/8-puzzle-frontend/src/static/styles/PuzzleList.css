@@ -54,11 +54,11 @@
 }
 
 .btn-edit {
-    background-color: #22bb33;
+    background-color: hsl(200, 100%, 50%);
 }
 
 .btn-edit:hover {
-    background-color: #1ea82d;
+    background-color: hsl(200, 100%, 40%);
 }
 
 .btn-delete {
@@ -67,4 +67,12 @@
 
 .btn-delete:hover {
     background-color: #a81d20;
+}
+
+.btn-start {
+    background-color: #22bb33;
+}
+
+.btn-start:hover {
+    background-color: #1ea82d;
 }

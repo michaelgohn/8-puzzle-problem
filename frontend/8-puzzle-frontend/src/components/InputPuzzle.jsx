@@ -74,7 +74,7 @@ export const InputPuzzle = () => {
         console.log(requestBody);
 
         try {
-            const response = await fetch("http://localhost:8080/puzzle/create", {
+            const response = await fetch("http://localhost:8080/puzzle", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -21,7 +21,7 @@ export const EditPuzzle = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch(`http://localhost:8080/puzzle/retrieve/${id}`)
+                const response = await fetch(`http://localhost:8080/puzzle/${id}`)
     
                 if(!response.ok) {
                     throw new Error(`Request failed with status ${(await response).status}`);
@@ -109,7 +109,7 @@ export const EditPuzzle = () => {
         console.log(requestBody);
 
         try {
-            const response = await fetch(`http://localhost:8080/puzzle/edit/${id}`, {
+            const response = await fetch(`http://localhost:8080/puzzle/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
