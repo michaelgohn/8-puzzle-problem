@@ -9,6 +9,7 @@ import { Routes, Route } from "react-router-dom"
 import { EditPuzzle } from './components/EditPuzzle'
 import { SolvingPage } from './components/SolvingPage'
 import { SolvedPage } from './components/SolvedPage'
+import { NotSolvedPage } from './components/NotSolvedPage'
 
 function App() {
 
@@ -19,7 +20,8 @@ function App() {
       <Route path="/view" element={ <PuzzleList /> } />
       <Route path="/edit/:id" element={ <EditPuzzle /> } />
       <Route path='/start/:id' element={ <SolvingPage /> } />
-      <Route path='/solved' element={ <SolvedPage />} />
+      <Route path='/solved' element={ <SolvedPage /> } />
+      <Route path='/not-solved' element={ <NotSolvedPage /> } />
     </Routes>
   )
 }

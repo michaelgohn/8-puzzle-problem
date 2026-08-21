@@ -14,15 +14,27 @@ export const SolvingPage = () => {
     async function handleSolveRequest() {
         try {
             const response = await fetch(`http://localhost:8080/puzzle/start/${id}`);
+
+            if(response.status === 422){
+                const errorMessage = await response.text();
+                console.log(errorMessage);
+                navigate('/not-solved');
+                return;
+            }
+
+            if(!response.ok){
+                throw new Error(`HTTP Status: ${response.status}`);
+            }
+            
             const data = await response.json();
             console.log(JSON.stringify(data, null, 2));
             navigate('/solved', {
                 state: {
                     data,
                 }
-            })
+            });
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
     }
     

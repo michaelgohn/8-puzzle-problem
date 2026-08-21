@@ -2,6 +2,7 @@ import { InputPuzzleTile } from "./InputPuzzleTile"
 import "../static/styles/Puzzle.css"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 export const InputPuzzle = () => {
 
@@ -51,49 +52,77 @@ export const InputPuzzle = () => {
     }
 
     function handleInitSubmit() {
-        const matrix = buildInitMatrix();
-
-        setInitMatrix(matrix);
-        console.log(matrix);
-        console.log(heuristic);
-        setShowGoalState(true);
+        if(validation(initPuzzleValues)) {
+            const matrix = buildInitMatrix();
+    
+            setInitMatrix(matrix);
+            console.log(matrix);
+            console.log(heuristic);
+            setShowGoalState(true);
+        }
     }
 
     async function handleGoalSubmit() {
-        const matrix = buildGoalMatrix();
-        setGoalMatrix(matrix);
-        console.log(matrix);
-
-        const requestBody = {
-            title: title,
-            initMatrix: initMatrix,
-            goalMatrix: matrix,
-            heuristic: heuristic
-        };
-
-        console.log(requestBody);
-
-        try {
-            const response = await fetch("http://localhost:8080/puzzle", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(requestBody)
-            });
-
-            if(!response.ok){
-                throw new Error(`Request failed with status ${(await response).status}`);
-            }
-
-            const data = await response.json();
-            console.log(`Backend response: ${data}`);
-        } catch (error) {
-            console.error(`Error sending puzzle: ${error}`);
-        };
-
-        navigate("/");
+        console.log(goalPuzzleValues);
+        if(validation(goalPuzzleValues)){
+            const matrix = buildGoalMatrix();
+            setGoalMatrix(matrix);
+            console.log(matrix);
+    
+            const requestBody = {
+                title: title,
+                initMatrix: initMatrix,
+                goalMatrix: matrix,
+                heuristic: heuristic
+            };
+    
+            console.log(requestBody);
+    
+            try {
+                const response = await fetch("http://localhost:8080/puzzle", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+    
+                if(!response.ok){
+                    throw new Error(`Request failed with status ${(await response).status}`);
+                }
+    
+                const data = await response.json();
+                console.log(`Backend response: ${data}`);
+            } catch (error) {
+                console.error(`Error sending puzzle: ${error}`);
+            };
+    
+            navigate("/");
+        }
     }
+
+    const validation = (arr) => {
+        if(title.length === 0){
+            alert('Title is required');
+        } else if(arr.includes('')) {
+            alert('All tiles must have a value');
+        } else if(hasDuplicates(arr)) {
+            alert('All tile values must be unique');
+        } else if(valueOutOfRange(arr)) {
+            alert('All tile values must be between 0 and 8 (inclusive)');
+        } else {
+            return true;
+        }
+        return false;
+    }
+
+    const hasDuplicates = (arr) => new Set(arr).size !== arr.length;
+
+    const valueOutOfRange = (arr) => {
+        return arr.some(val => val < 0 || val > 8);
+    }
+
+    const backToInit = () => setShowGoalState(false);
 
     return(
         <>
@@ -101,7 +130,11 @@ export const InputPuzzle = () => {
                 !showGoalState && <div className="input-puzzle">
                     <div className="input-container">
                         <label htmlFor="title-input">Create Title</label>
-                        <input id="title-input" type="text" onChange={e => handleTitleChange(e.target.value)}/>
+                        <input 
+                            id="title-input"
+                            type="text"
+                            value={title}
+                            onChange={e => handleTitleChange(e.target.value)}/>
                     </div>
 
                     <div className="outer-border">
@@ -124,7 +157,12 @@ export const InputPuzzle = () => {
                         </select>
                     </div>
 
-                    <button onClick={handleInitSubmit} className="btn puzzle-submit-btn">Submit Puzzle</button>
+                    <div>
+                        <Link to='/'>
+                            <button className="btn back-btn">Back</button>
+                        </Link>
+                        <button onClick={handleInitSubmit} className="btn puzzle-submit-btn">Submit Puzzle</button>
+                    </div>
                 </div>
             }
 
@@ -141,8 +179,11 @@ export const InputPuzzle = () => {
                             ))
                         }
                     </div>
-
-                    <button onClick={handleGoalSubmit} className="btn puzzle-submit-btn">Submit Puzzle</button>
+                    
+                    <div>
+                        <button className="btn back-to-init-btn" onClick={backToInit}>Back</button>
+                        <button onClick={handleGoalSubmit} className="btn puzzle-submit-btn">Submit Puzzle</button>
+                    </div>
                 </div>
             }
         </>
