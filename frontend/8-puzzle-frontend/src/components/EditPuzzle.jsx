@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
+import { Link } from "react-router-dom"
 
 export const EditPuzzle = () => {
 
@@ -130,6 +131,8 @@ export const EditPuzzle = () => {
         navigate("/");
     }
 
+    const backToInit = () => setShowGoalState(false);
+
     return(
         <>
             {
@@ -164,7 +167,12 @@ export const EditPuzzle = () => {
                         </select>
                     </div>
 
-                    <button onClick={handleInitSubmit} className="btn puzzle-submit-btn">Submit Puzzle</button>
+                    <div>
+                        <Link to='/view'>
+                            <button className="btn back-btn">Back</button>
+                        </Link>
+                        <button onClick={handleInitSubmit} className="btn puzzle-submit-btn">Submit Puzzle</button>
+                    </div>
                 </div>
             }
 
@@ -182,7 +190,10 @@ export const EditPuzzle = () => {
                         }
                     </div>
 
-                    <button onClick={handleGoalSubmit} className="btn puzzle-submit-btn">Submit Puzzle</button>
+                    <div>
+                        <button className="btn back-to-init-btn" onClick={backToInit}>Back</button>
+                        <button onClick={handleGoalSubmit} className="btn puzzle-submit-btn">Submit Puzzle</button>
+                    </div>
                 </div>
             }
         </>
